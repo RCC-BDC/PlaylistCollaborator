@@ -1,0 +1,24 @@
+Django Project
+
+3 Django Apps
+-Frontend (React can be integrated into Django)
+-Backend
+-SpotifyComms
+
+Django comes with sqlite db
+
+App flow
+-User loads homepage 
+-Verify spotify account
+-User searches for playlist
+-Playlist displayed on page with voting option
+-User votes on songs
+
+
+Backend calls
+-Authorize spotify account - redirect to spotify page and back to homepage
+-Calls to load playlist
+-Calls to add votes to songs
+
+How do we keep track of votes on songs
+Database?
