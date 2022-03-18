@@ -3,7 +3,7 @@ Django Project
 3 Django Apps
 -Frontend (React can be integrated into Django)
 -Backend
--SpotifyComms
+-SpotifyComms (https://developer.spotify.com/documentation/web-api/)
 
 Django comes with sqlite db
 
