@@ -8,7 +8,7 @@ Django Project
 Django comes with sqlite db
 
 App flow
--User loads homepage 
+-User loads homepage
 -Verify spotify account
 -User searches for playlist
 -Playlist displayed on page with voting option
