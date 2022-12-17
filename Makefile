@@ -1,10 +1,10 @@
-default: all
+default: up
 
 up:
-	docker-compose -p gatech -f docker-compose.yml up -d
+	docker-compose -p spotify-app -f docker-compose.yml up -d
 
 down:
-	docker-compose -p gatech -f docker-compose.yml down
+	docker-compose -p spotify-app -f docker-compose.yml down
 
 .PHONY: clean
 clean:
@@ -13,24 +13,18 @@ clean:
 
 .PHONY: installDeps
 installDeps:
-	cd app
-	source .venv/bin/activate
-	pip3 install -r requirements.txt
-
-.PHONY: appDev
-appDev:
-	cd SpotifyApp && source .venv/bin/activate && python3 manage.py runserver
+	cd SpotifyApp && source .venv/bin/activate && pip3 install -r requirements.txt
 
 #
 # Build Images
 #
 .PHONY: app
 app:
-	docker build -t app -f ./Dockerfiles/Dockerfile.app ./SpotifyApp
+	docker build ./SpotifyApp -t spotify-app/web
 
 .PHONY: db
 db:
-	docker build -t primary-db -f ./Dockerfiles/Dockerfile.db ./db
+	docker build ./db -t spotify-app/db
 
 .PHONY: all
-all: app db up
+all: installDeps app db

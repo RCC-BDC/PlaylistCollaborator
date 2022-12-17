@@ -9,9 +9,11 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory
 WORKDIR /code
 
-# Install dependencies
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
-
-# Copy project
+# Copy Code over to working dir
 COPY . .
+RUN chown -R $USER:$USER .
+
+EXPOSE 8000
+
+# Install dependencies
+RUN pip install -r requirements.txt
