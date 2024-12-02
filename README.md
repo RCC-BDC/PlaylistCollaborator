@@ -1,11 +1,9 @@
 # Spotify App
 
-An App for voting for songs in playlists.
+An App for voting for songs in playlists. _Note: Recommended to exectute the below commands in a bash/zsh shell_
 
-## Starting the Server
+## Getting Started
 
-`python manage.py runserver`
-
-## Installing Dependencies
-
-`pip install -r requirements.txt` or `pip3 install -r requirements.txt`
+- `make all`: Makes the docker images
+- `make up`: Runs docker images using docker-compose
+- `make down`: Stops docker images

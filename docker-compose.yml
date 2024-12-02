@@ -1,0 +1,54 @@
+version: "3.9"
+networks:
+  # the internal network is a bridge network used by the api container and database
+  # We could also bypass this in favor of port fowarding to the host machine and
+  # communicating over tcp through the host, but this showcases a way to use docker's internal DNS to
+  # resolve networks
+  internal:
+    name: spotify_app_internal
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.17.0.0/16
+
+services:
+  db:
+    container_name: PostgresDB
+    image: spotify-app/db
+    networks:
+      - internal
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    container_name: WebApp
+    image: spotify-app/web
+    build:
+      context: ./SpotifyApp
+    command: python manage.py runserver 0.0.0.0:8000
+    networks:
+      - internal
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./SpotifyApp:/code
+    depends_on:
+      - db
+    healthcheck:
+      test: curl --fail localhost:8000 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
